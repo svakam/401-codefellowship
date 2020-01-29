@@ -49,18 +49,13 @@ public class HomeController {
         return new RedirectView("/");
     }
 
-//    @GetMapping("/users/{id}")
-//    public String getUserInfo() {
-//        // get info from database about particular user
-//
-//
-//        // display user info on page
-//    }
-
     @GetMapping("/login")
     public String getLogin() {return "login"; }
 
     // postmapping for login handled by spring security
 
     // getmapping for logout handled by spring - by default goes to login page
+
+    @GetMapping("/myprofile")
+    public String getProfile() {return "myprofile"; }
 }
