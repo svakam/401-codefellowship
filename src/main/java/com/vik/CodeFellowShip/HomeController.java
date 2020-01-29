@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
+
 @Controller
 public class HomeController {
 
@@ -22,7 +24,13 @@ public class HomeController {
     PasswordEncoder encoder;
 
     @GetMapping("/")
-    public String getHome() {
+    public String getHome(Principal p) {
+        // take in Principal p (how we get access to person currently logged in), check if not null, then print name of principal
+        if (p != null) {
+            System.out.println(p.getName());
+        } else {
+            System.out.println("nobody logged in");
+        }
         return "home";
     }
 
@@ -42,4 +50,8 @@ public class HomeController {
 
     @GetMapping("/login")
     public String getLogin() {return "login"; }
+
+    // postmapping for login handled by spring security
+
+    // getmapping for logout handled by spring - by default goes to login page
 }

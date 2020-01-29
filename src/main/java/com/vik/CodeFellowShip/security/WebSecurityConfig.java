@@ -15,13 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 // imported this config from outside
 // comment out errors first, indent configure()
+// comment back in authenticationmanagerbuilder after getters set in applicationuser
+// comment back in userdetailsserviceimpl instantiation
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -29,10 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
-//    @Override
-//    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
+    // uses user details service with password encoder; this is where it all comes together; comment it back in
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
