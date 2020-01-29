@@ -20,8 +20,9 @@ public class HomeController {
     ApplicationUserRepository applicationUserRepository;
 
     // password encoder: this can be autowired because there is a bean in websecurityconfig
+    // used to encode password on instantiation of username info on signup page
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @GetMapping("/")
     public String getHome(Principal p) {
@@ -40,13 +41,21 @@ public class HomeController {
     }
 
     @PostMapping("/signup")
-    public RedirectView signup(String username, String password, String firstName) {
+    public RedirectView signup(String username, String password, String firstName, String lastName, String dob, String bio) {
         // instantiate ApplicationUser and use encoder on password
-        ApplicationUser newUser = new ApplicationUser(username, encoder.encode(password), firstName);
+        ApplicationUser newUser = new ApplicationUser(username, encoder.encode(password), firstName, lastName, dob, bio);
         // save to database
         applicationUserRepository.save(newUser);
         return new RedirectView("/");
     }
+
+//    @GetMapping("/users/{id}")
+//    public String getUserInfo() {
+//        // get info from database about particular user
+//
+//
+//        // display user info on page
+//    }
 
     @GetMapping("/login")
     public String getLogin() {return "login"; }

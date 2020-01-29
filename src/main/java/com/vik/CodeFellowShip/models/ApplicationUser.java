@@ -19,13 +19,19 @@ public class ApplicationUser implements UserDetails {
     String username;
     String password;
     String firstName;
+    String lastName;
+    String dob;
+    String bio;
 
     public ApplicationUser() {}
 
-    public ApplicationUser(String username, String password, String firstName) {
+    public ApplicationUser(String username, String password, String firstName, String lastName, String dob, String bio) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.bio = bio;
     }
 
     // this is for after applicationuser implements user details; make boolean returns return true
