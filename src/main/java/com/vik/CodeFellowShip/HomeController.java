@@ -33,6 +33,7 @@ public class HomeController {
             System.out.println(p.getName());
             // p's name passed in, then using database repo to get username to pass it in
             ApplicationUser user = applicationUserRepository.findByUsername(p.getName());
+            System.out.println(user);
             m.addAttribute("user", user);
         } else {
             System.out.println("nobody logged in");
