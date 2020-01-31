@@ -6,6 +6,7 @@ import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,10 +26,15 @@ public class HomeController {
     private PasswordEncoder encoder;
 
     @GetMapping("/")
-    public String getHome(Principal p) {
+    // model m to pass in variables
+    public String getHome(Principal p, Model m) {
         // take in Principal p (how we get access to person currently logged in), check if not null, then print name of principal
         if (p != null) {
             System.out.println(p.getName());
+            // p's name passed in, then using database repo to get username to pass it in
+            ApplicationUser user = applicationUserRepository.findByUsername(p.getName());
+            System.out.println(user);
+            m.addAttribute("user", user);
         } else {
             System.out.println("nobody logged in");
         }
@@ -49,18 +55,13 @@ public class HomeController {
         return new RedirectView("/");
     }
 
-//    @GetMapping("/users/{id}")
-//    public String getUserInfo() {
-//        // get info from database about particular user
-//
-//
-//        // display user info on page
-//    }
-
     @GetMapping("/login")
     public String getLogin() {return "login"; }
 
     // postmapping for login handled by spring security
 
     // getmapping for logout handled by spring - by default goes to login page
+
+    @GetMapping("/myprofile")
+    public String getProfile() {return "myprofile"; }
 }
