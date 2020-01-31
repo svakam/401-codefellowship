@@ -3,7 +3,11 @@ package com.vik.CodeFellowShip;
 import com.vik.CodeFellowShip.models.ApplicationUser;
 import com.vik.CodeFellowShip.models.ApplicationUserRepository;
 import javafx.application.Application;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 public class HomeController {
@@ -52,6 +57,10 @@ public class HomeController {
         ApplicationUser newUser = new ApplicationUser(username, encoder.encode(password), firstName, lastName, dob, bio);
         // save to database
         applicationUserRepository.save(newUser);
+
+        // autologin
+        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return new RedirectView("/");
     }
 
@@ -63,5 +72,8 @@ public class HomeController {
     // getmapping for logout handled by spring - by default goes to login page
 
     @GetMapping("/myprofile")
-    public String getProfile() {return "myprofile"; }
+    public String getProfile() {
+//        applicationUserRepository.
+        return "myprofile";
+    }
 }

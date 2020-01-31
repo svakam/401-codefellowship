@@ -2,6 +2,7 @@
     <th:block th:if="${user}">
         <span><b>Welcome, [[${user.username}]]!</b></span>
         <a href="/">Home</a>
+        <a href="/myprofile">My Profile</a>
         <a href="/logout">Logout</a>
     </th:block>
     <th:block th:unless="${user}">
